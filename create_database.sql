@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS  expenses (
     amount INT,
-    catergory VARCHAR,
+    catergory VARCHAR NULL,
     time TIMESTAMP,
     limit_id TIMESTAMP,
     FOREIGN KEY(limit_id) REFERENCES limits(moth)
