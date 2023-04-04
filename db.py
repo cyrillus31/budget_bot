@@ -47,12 +47,16 @@ def get_monthly_limit() -> str:
 
 def get_todays_expenses() -> str:
     "Returns how much money was spent today"
-    query = "SELECT SUM(amount) FROM expenses WHERE limit_id=strftime('%m')"
+    query = "SELECT SUM(amount) FROM expenses WHERE limit_id=strftime('%m') AND category!='0' AND category!=0"
     res = cursor.execute(query)
     return str(res.fetchone()[0])
 
 
 insert_expenses(2000, "haircut")
-insert_expenses(111)
-insert_monthly_limit(60000)
+insert_expenses(111, 0)
+try:
+    insert_monthly_limit(60000)
+except sqlite3.IntegrityError:
+    update_monthly_limit(7777)
+print(get_monthly_limit())
 print(get_todays_expenses())
