@@ -16,6 +16,8 @@ url = f"https://api.telegram.org/bot{TOKEN}"
 
 # print(requests.get(url+"/getMe").text)
 
+my_budget = Budget()
+calendar = Calendar()
 
 async def getMe(session):
     response = await session.get(url+"/getMe")
@@ -41,24 +43,38 @@ async def sendMessage(session, text, chat_it=CHAT_ID):
 
 
 async def main():
+    my_budget.spent = int(await db.get_this_month_expenses())
+    my_budget.monthly_goal = int(await db.get_monthly_limit())
+    my_budget.days = calendar.days_left()
+
     "The main function"
     last_update = 0
     update_id = json.loads(requests.get(url+"/getUpdates").text)["result"][-1]["update_id"]
     time.sleep(0.4)
     last_update = update_id
 
+
     while True:
         async with aiohttp.ClientSession() as session:
             message, update_id = await getUpdates(session)
             # print(message, update_id)
-            answer = help_message_handler(update_id, last_update, message)
-            await sendMessage(session, answer)
-            
 
+            # Help message
+            if update_id != last_update and message == "/help":
+                answer = help_message_handler(update_id, last_update, message)
+                await sendMessage(session, answer)
+
+            # Update monthly limit
+            elif update_id != last_update  and message == "/monthly_limit":
+
+                await sendMessage(session, today_expenses)
+
+            # Status message
             elif update_id != last_update  and message == "/status":
                 today_expenses = await db.get_todays_expenses()
                 await sendMessage(session, today_expenses)
 
+            # Adding expenses
             elif update_id != last_update:
                 try:
                     expense = message.split()[0]
@@ -71,7 +87,7 @@ async def main():
                     await sendMessage(session, "I don't understand you")
             
             last_update = update_id
-            time.sleep(2)
+            time.sleep(1)
             
             await asyncio.sleep(1)
             

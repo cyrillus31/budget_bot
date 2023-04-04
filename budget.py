@@ -3,32 +3,30 @@
 
 class Budget():
     """This class """
-    monthly_goal = 60000
-    days = 30
-    days_left = 29
 
     def __init__(self):
         self.daily_limit = 0
         self.spent = 0
+        self.monthly_goal = 60000
+        self.days = 30
+        self.days_left = 29
 
-    @classmethod
-    def update_monthly_limit(cls, new_goal):
+    def update_monthly_limit(self, new_goal):
         "Updates monthly limit"
-        cls.monthly_goal = new_goal
+        self.monthly_goal = new_goal
 
-    @classmethod
-    def update_days_in_month(cls, days_in_month):
+    def update_days_in_month(self, days_in_month):
         "Updates amount of days left"
-        cls.days_left = days_in_month
+        self.days_left = days_in_month
 
     def update_daily_limit(self):
         "Updates the value of daily limit"
-        self.daily_limit = (Budget.monthly_goal - self.spent) / Budget.days_left
+        self.daily_limit = (self.monthly_goal - self.spent) / self.days_left
 
     def status(self):
         """This method reterns the current status of the budget"""
         return f"""Your current limit for today is {round(self.daily_limit, 2)}
-This month you've spent {self.spent} out of {Budget.monthly_goal}"""
+This month you've spent {self.spent} out of {self.monthly_goal}"""
 
     def update_spendings(self, spent, category="other"):
         "Updates spendings"
