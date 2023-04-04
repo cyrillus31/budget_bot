@@ -1,9 +1,12 @@
 "This module works with business logic"
 
 from budget import Budget
+import db
+from days import Calendar
 
-my_budget = Budget()
-my_budget.update_spendings(1000)
-my_budget.update_spendings(1000)
-my_budget.update_daily_limit()
-print(my_budget.status())
+
+Budget.monthly_goal
+# my_budget.update_spendings(1000)
+# my_budget.update_spendings(1000)
+# my_budget.update_daily_limit()
+# print(my_budget.status())

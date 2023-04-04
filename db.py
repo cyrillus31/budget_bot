@@ -52,11 +52,11 @@ def get_todays_expenses() -> str:
     return str(res.fetchone()[0])
 
 
-insert_expenses(2000, "haircut")
-insert_expenses(111, 0)
-try:
-    insert_monthly_limit(60000)
-except sqlite3.IntegrityError:
-    update_monthly_limit(7777)
-print(get_monthly_limit())
-print(get_todays_expenses())
+# insert_expenses(2000, "haircut")
+# insert_expenses(111, 0)
+# try:
+    # insert_monthly_limit(60000)
+# except sqlite3.IntegrityError:
+    # update_monthly_limit(7777)
+# print(get_monthly_limit())
+# print(get_todays_expenses())
