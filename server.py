@@ -54,7 +54,7 @@ async def main():
                 await sendMessage(session, url, answer, CHAT_ID)
 
             last_update_id = update_id
-            time.sleep(1)
+            time.sleep(2)
 
 
 if __name__ == "__main__":

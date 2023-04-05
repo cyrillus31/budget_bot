@@ -34,12 +34,12 @@ async def message_handler(update_id, last_update, message, budget_class) -> str:
     and comes back with a string response"""
 
     # Help message
-    if update_id != last_update and "/help" in message:
-        answer = "here comes help! (no)"
+    if update_id != last_update and ("/help" in message) or ("/start" in message):
+        answer = "use following functions: /help /start /status /monthly_limit_upd /monthly_limit_ins"
         return answer
 
     # Update monthly limit
-    elif update_id != last_update and "/monthly_limit" in message:
+    elif update_id != last_update and "/monthly_limit_upd" in message:
         if len(message.split()) == 1:
             return str(budget_class.monthly_goal)
         else:
@@ -47,6 +47,18 @@ async def message_handler(update_id, last_update, message, budget_class) -> str:
             budget_class.update_monthly_limit(db.update_monthly_limit(new_limit))
             budget_class.update_daily_limit()
             return "Monthly limit was updated"
+
+
+    # Insert monthly limit
+    elif update_id != last_update and "/monthly_limit_ins" in message:
+        if len(message.split()) == 1:
+            return str(budget_class.monthly_goal)
+        else:
+            new_limit = message.split()[-1]
+            budget_class.update_monthly_limit(db.insert_monthly_limit(new_limit))
+            budget_class.update_daily_limit()
+            return "Monthly limit was created"
+
 
     # Status message
     elif update_id != last_update  and message == "/status":
@@ -61,10 +73,10 @@ async def message_handler(update_id, last_update, message, budget_class) -> str:
             category = message.split()[-1]
             budget_class.update_spendings(db.insert_expenses(expense, category), category)
             budget_class.update_daily_limit()
-            return "Expenses added"
+            return "Spendings added"
 
         except ValueError:
-            await sendMessage(session, "I don't understand you")
+            return "I don't understand you"
 
     else:
         return None

@@ -24,8 +24,9 @@ class Budget():
 
     def status(self):
         """This method reterns the current status of the budget"""
-        return f"""Your current limit for today is {round(self.daily_limit, 2)}
-This month you've spent {self.spent} out of {self.monthly_goal}"""
+        return f"""Your current limit for today is {round(self.daily_limit, 2)} \n
+This month you've spent {self.spent} out of {self.monthly_goal}. 
+There are {self.days_left} days left in the current month."""
 
     def update_spendings(self, spent, category="other"):
         "Updates spendings"
