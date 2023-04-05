@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS  expenses (
 );
 
 CREATE TABLE IF NOT EXISTS  limits (
-    month TIMESTAMP TIMESTAMP PRIMARY KEY,
-    monthly_limit INT
+    month TIMESTAMP PRIMARY KEY,
+    monthly_limit INTEGER,
+    daily_limit INTEGER
 );
