@@ -8,8 +8,7 @@ class Budget():
         self.daily_limit = 0
         self.spent = 0
         self.monthly_goal = 60000
-        self.days = 30
-        self.days_left = 29
+        self.days_left = 30
 
     def update_monthly_limit(self, new_goal):
         "Updates monthly limit"

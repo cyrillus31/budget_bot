@@ -24,24 +24,34 @@ async def main():
     "The main function"
 
     # Initialising the budget object
-    my_budget.spent = int(await db.get_this_month_expenses())
-    my_budget.monthly_goal = int(await db.get_monthly_limit())
-    my_budget.days = calendar.days_left()
+    my_budget.spent = int(db.get_this_month_expenses())
+    my_budget.monthly_goal = int(db.get_monthly_limit())
+    my_budget.days_left = calendar.days_left()
+    my_budget.update_daily_limit()
 
-    update_id = json.loads(requests.get(url+"/getUpdates").text)["result"][-1]["update_id"]
-    time.sleep(0.4)
+    try:
+        update_id = json.loads(requests.get(url+"/getUpdates").text)["result"][-1]["update_id"]
+        time.sleep(0.4)
+    
+    except IndexError:
+        update_id = "0"
+    
     last_update_id = update_id
 
     while True:
+
+        my_budget.days_left = calendar.days_left()
+        my_budget.update_daily_limit()
+
         async with aiohttp.ClientSession() as session:
-            message, update_id = await getUpdates(session)
+            message, update_id = await getUpdates(session, url)
             # print(message, update_id)
 
-            answer = message_handler(update_id, last_update_id, message)
+            answer = await message_handler(update_id, last_update_id, message, my_budget)
 
-            # if there is an answer - send message to the user
+            # if there is an answer send message to the user
             if isinstance(answer, str) and answer != "":
-                sendMessage(session, answer)
+                await sendMessage(session, url, answer, CHAT_ID)
 
             last_update_id = update_id
             time.sleep(1)
