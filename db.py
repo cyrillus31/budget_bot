@@ -19,7 +19,7 @@ create_database()
 
 def insert_expenses(amount, category=""):
     "Insert into sql table called expenses"
-    query = "INSERT INTO expenses VALUES(?, ?, datetime(), strftime('%m', 'now', '+3 hours'))"
+    query = "INSERT INTO expenses VALUES(?, ?, datetime('now', '+3 hours'), strftime('%m', 'now', '+3 hours'))"
     cursor.execute(query, (amount, category))
     conn.commit()
     return int(amount)

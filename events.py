@@ -1,10 +1,6 @@
 import db
 import json
 
-# def help_message_handler(update_id, last_update, message) -> str:
-    # if update_id != last_update  and message == "hi":
-        # return "HELLO THERE! NEED SOME  HEEEELP?"
-
 
 async def getMe(session, url):
     response = await session.get(url+"/getMe")
@@ -14,7 +10,7 @@ async def getMe(session, url):
 
 async def getUpdates(session, url, offset=0, limit=100) -> str:
     "Rerturns a string of the last recieved message"
-    async with session.get(url+"/getUpdates") as response:
+    async with session.get(url+f"/getUpdates?offset={offset}&timeout=1&limit={limit}") as response:
         text = await response.text()
     dictionary = json.loads(text)
     # print(dictionary)
