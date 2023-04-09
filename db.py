@@ -95,3 +95,12 @@ def get_this_month_expenses() -> str:
 
     except TypeError:
         return "0"
+
+def reset() -> str:
+    query = """DROP TABLE expenses;"""
+    cursor.execute(query)
+    query = """DROP TABLE limits;"""
+    cursor.execute(query)
+    conn.commit()
+    create_database()
+    
