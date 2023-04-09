@@ -1,3 +1,4 @@
 **/__pycache__/
 **/*.db
 **/*.sh
+**/testing_api.py
