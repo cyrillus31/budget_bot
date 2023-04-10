@@ -70,7 +70,7 @@ def get_previous_monthly_limit() -> str:
 def get_todays_expenses() -> str:
     "Returns how much money was spent today"
     query = """SELECT SUM(amount) FROM expenses 
-                WHERE strftime('%m-%d', time, '+3 hours') AND category!='0' 
+                WHERE strftime('%m-%d', time) = strftime('%m-%d', 'now', '+3 hours') AND category!='0' 
                 AND category!=0"""
     try:
         res = cursor.execute(query).fetchone()[0]
