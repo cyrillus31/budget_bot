@@ -36,7 +36,8 @@ There are {self.days_left} days left in the current month."""
         "This method returns how much money is left for today"
         self.daily_limit = round(self.monthly_goal / self.days_in_month, 2)
         left_for_today = round(self.daily_limit - self.spent_today, 2)
-        return f"You have {left_for_today} out of {self.daily_limit} left for today."
+        trl = (self.days_in_month - self.days_left)*self.daily_limit - self.spent
+        return f"Today's running limit: {trl}\nYou have {left_for_today} out of {self.daily_limit} left for today."
 
     def update_spendings(self, spent, category="other"):
         "Updates spendings"
