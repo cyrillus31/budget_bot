@@ -39,8 +39,8 @@ There are {self.days_left} days left in the current month."""
         self.daily_limit = round(self.monthly_goal / self.days_in_month, 2)
         spent_today = round(self.spent_today, 2)
         trl = round((self.days_in_month - self.days_left)*self.daily_limit - self.spent, 2)
-        return f"""Today's running limit: {trl}\nYou've spent {spent_today} out of average daily limit {round(self.running_daily_limit, 2)} today. You have {round(self.running_daily_limit - spent_today, 2)} left today.\n
-Your at the start of the month your daily limit was {round(self.daily_limit)}."""
+        return f"""Today's running limit: {trl}\nYou've spent {spent_today} out of your updated average daily limit {round(self.running_daily_limit, 2)}. You have {round(self.running_daily_limit - spent_today, 2)} left for today.\n
+At the start of the month your daily limit was {round(self.daily_limit)}."""
 
     def update_spendings(self, spent, category="other"):
         "Updates spendings"

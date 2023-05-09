@@ -17,11 +17,11 @@ CHAT_ID = os.getenv("BUDGET_TELEBOT_CHAT_ID").strip()
 my_budget = Budget()
 calendar = Calendar()
 connection = Connection(TOKEN)
-tday = None
 
 
 async def main():
     "The main function"
+    tday = None
     while True:
         # Initialising the budget object
         calendar.update_date()
