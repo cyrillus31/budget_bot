@@ -17,6 +17,7 @@ CHAT_ID = os.getenv("BUDGET_TELEBOT_CHAT_ID").strip()
 my_budget = Budget()
 calendar = Calendar()
 connection = Connection(TOKEN)
+tday = None
 
 
 async def main():
@@ -29,7 +30,9 @@ async def main():
         my_budget.days_left = calendar.days_left()
         my_budget.days_in_month = calendar.days_in_month()
         my_budget.spent_today = int(db.get_todays_expenses())
-        my_budget.update_running_daily_limit()
+        if calendar.tday != tday:
+            my_budget.update_running_daily_limit()
+        tday = calendar.tday
 
         async with aiohttp.ClientSession() as session:
             connection.session = session

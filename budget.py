@@ -30,16 +30,17 @@ class Budget():
 
     def status(self):
         """This method reterns the current status of the budget"""
-        return f"""Your your average spending for the ramianing days should not exceed {round(self.running_daily_limit, 2)}\n
+        return f"""Your your average spending for the ramianing days should not exceed {round(self.running_daily_limit, 2)} per day.\n
 This month you've spent {self.spent} out of {self.monthly_goal}. 
 There are {self.days_left} days left in the current month."""
 
     def today(self):
         "This method returns how much money is left for today"
         self.daily_limit = round(self.monthly_goal / self.days_in_month, 2)
-        left_for_today = round(self.daily_limit - self.spent_today, 2)
+        spent_today = round(self.spent_today, 2)
         trl = round((self.days_in_month - self.days_left)*self.daily_limit - self.spent, 2)
-        return f"Today's running limit: {trl}\nYou have {left_for_today} out of {self.daily_limit} left for today."
+        return f"""Today's running limit: {trl}\nYou've spent {spent_today} out of average daily limit {round(self.running_daily_limit, 2)} today. You have {round(self.running_daily_limit - spent_today, 2)} left today.\n
+Your at the start of the month your daily limit was {round(self.daily_limit)}."""
 
     def update_spendings(self, spent, category="other"):
         "Updates spendings"
