@@ -26,7 +26,7 @@ class Calendar():
         self.next_month = datetime(self.tday.year, self.tday.month+1, 1)
 
         # how many days left to the end of the month
-        return (self.next_month-self.tday).days
+        return (self.next_month-self.tday).days + 1
 
     def is_new_month(self) -> bool:
         "Checks if new month has started"

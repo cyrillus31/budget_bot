@@ -57,7 +57,7 @@ async def message_handler(message, budget_class) -> str:
         try:
             expense = message.split()[0]
             expense = int(expense)
-            category = message.split()[-1]
+            category = " ".join(message.split()[1:])
             budget_class.update_spendings(db.insert_expenses(expense, category), category)
             budget_class.update_running_daily_limit()
             return "Spendings added"

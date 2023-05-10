@@ -23,8 +23,8 @@ class Budget():
 
     def update_running_daily_limit(self):
         "Updates the value of daily limit"
-        if self.days_left == 0:
-            self.days_left = 1
+        # if self.days_left == 0:
+        #     self.days_left = 1
         self.running_daily_limit = (self.monthly_goal - self.spent) / self.days_left
         self.daily_limit = self.monthly_goal / self.days_in_month
 

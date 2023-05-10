@@ -30,9 +30,10 @@ async def main():
         my_budget.days_left = calendar.days_left()
         my_budget.days_in_month = calendar.days_in_month()
         my_budget.spent_today = int(db.get_todays_expenses())
+
         if calendar.tday != tday:
             my_budget.update_running_daily_limit()
-        tday = calendar.tday
+        tday = calendar.tday.date()
 
         async with aiohttp.ClientSession() as session:
             connection.session = session
