@@ -2,3 +2,5 @@
 **/*.db
 **/*.sh
 **/testing_api.py
+**/logs/
+**/*.log

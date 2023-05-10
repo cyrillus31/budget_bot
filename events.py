@@ -39,12 +39,12 @@ async def message_handler(message, budget_class) -> str:
 
     # Status message
     elif message == "/status":
-        budget_class.update_running_daily_limit()
+        # budget_class.update_running_daily_limit()
         return budget_class.status()
 
     # Today status message
     elif message == "/today":
-        budget_class.update_running_daily_limit()
+        # budget_class.update_running_daily_limit()
         return budget_class.today()
 
     elif message == "/reset":
@@ -59,7 +59,7 @@ async def message_handler(message, budget_class) -> str:
             expense = int(expense)
             category = " ".join(message.split()[1:])
             budget_class.update_spendings(db.insert_expenses(expense, category), category)
-            budget_class.update_running_daily_limit()
+            # budget_class.update_running_daily_limit()
             return "Spendings added"
 
         except ValueError:

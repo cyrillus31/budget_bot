@@ -3,11 +3,15 @@ import asyncio
 import os
 import time
 
+import logging
+
 from budget import Budget
 import db
 from days import Calendar
 from events import message_handler
 from c31_telegram_bot_api import Connection
+
+logging.basicConfig(filename="logs/server.log", level=logging.INFO)
 
 TOKEN = os.getenv("BUDGET_TELEBOT_TOKEN").strip()
 CHAT_ID = os.getenv("BUDGET_TELEBOT_CHAT_ID").strip()
@@ -17,6 +21,9 @@ CHAT_ID = os.getenv("BUDGET_TELEBOT_CHAT_ID").strip()
 my_budget = Budget()
 calendar = Calendar()
 connection = Connection(TOKEN)
+
+if not os.path.exists("logs/"):
+    os.makedirs("logs")
 
 
 async def main():
@@ -31,8 +38,14 @@ async def main():
         my_budget.days_in_month = calendar.days_in_month()
         my_budget.spent_today = int(db.get_todays_expenses())
 
-        if calendar.tday != tday:
+        logging.debug(f"running daily limit is {my_budget.running_daily_limit}")
+        logging.debug(f"calendar.tday.date() is {calendar.tday.date()}")
+        logging.debug(f"tday is {tday}")
+        logging.debug(f"They are equal: {calendar.tday.date() == tday}")
+
+        if calendar.tday.date() != tday:
             my_budget.update_running_daily_limit()
+            logging.info(f"running daily updated to {my_budget.running_daily_limit}")
         tday = calendar.tday.date()
 
         async with aiohttp.ClientSession() as session:
