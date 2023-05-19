@@ -21,10 +21,14 @@ class Connection():
         response = await response.json()
         updates = dict()
         for item in response["result"]:
-            update_id = item["update_id"]
-            text = item["message"]["text"]
-            updates[update_id] = text
-            self.offset = update_id + 1
+            try:
+                update_id = item["update_id"]
+                text = item["message"]["text"]
+                updates[update_id] = text
+                self.offset = update_id + 1
+            except:
+                pass
+                
             
         # print(updates)
         return updates
