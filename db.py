@@ -28,16 +28,22 @@ def insert_expenses(amount, category=""):
 def insert_monthly_limit(amount):
     "Insert into sql table limits"
     query = "INSERT INTO limits VALUES(strftime('%m', 'now', '+3 hours'), ?)"
-    cursor.execute(query, (amount,))
-    conn.commit()
+    try:
+        cursor.execute(query, (amount,))
+        conn.commit()
+    except:
+        pass
     return int(amount)
 
 
 def update_monthly_limit(amount):
     "Update sql table limits"
     query = "UPDATE limits SET monthly_limit=? WHERE month=strftime('%m', 'now', '+3 hours')"
-    cursor.execute(query, (amount,))
-    conn.commit()
+    try:
+        cursor.execute(query, (amount,))
+        conn.commit()
+    except:
+        pass
     return int(amount)
 
 
